@@ -20,9 +20,9 @@ import com.cooksys.butterpillar.model.impl.GrowthModel;
 
 public class SpeciesTest {
 
-	private Reflections reflections;
-	private Set<Class<? extends ISpecies>> implementations;
-	private Class<? extends ISpecies> implementation;
+	private static Reflections reflections;
+	private static Set<Class<? extends ISpecies>> implementations;
+	private static Class<? extends ISpecies> implementation;
 
 	private ISpecies species;
 	private IGrowthModel model;
@@ -30,20 +30,20 @@ public class SpeciesTest {
 	private ICatterfly[] catterflies;
 
 	@BeforeClass
-	public void beforeClass() {
-		this.reflections = new Reflections("com.cooksys");
-		this.implementations = reflections.getSubTypesOf(ISpecies.class);
-		for (Class<? extends ISpecies> implementation : this.implementations) {
-			this.implementation = implementation;
+	public static void beforeClass() {
+		SpeciesTest.reflections = new Reflections("com.cooksys");
+		SpeciesTest.implementations = reflections.getSubTypesOf(ISpecies.class);
+		for (Class<? extends ISpecies> implementation : SpeciesTest.implementations) {
+			SpeciesTest.implementation = implementation;
 		}
 	}
 
 	@AfterClass
-	public void afterClass() {
-		this.reflections = null;
-		this.implementations.clear();
-		this.implementations = null;
-		this.implementation = null;
+	public static void afterClass() {
+		SpeciesTest.reflections = null;
+		SpeciesTest.implementations.clear();
+		SpeciesTest.implementations = null;
+		SpeciesTest.implementation = null;
 	}
 
 	@Before
@@ -53,7 +53,7 @@ public class SpeciesTest {
 		this.model.setLengthToWingspan(1.2);
 		this.model.setLeavesEatenToWeight(0.25);
 
-		this.species = implementation.newInstance();
+		this.species = SpeciesTest.implementation.newInstance();
 		this.species.setName("Test Species");
 		this.species.setGrowthModel(this.model);
 
@@ -82,7 +82,7 @@ public class SpeciesTest {
 	@Test
 	public void testSingleImplementation() {
 		Assert.assertEquals("There should be a single implementation of com.cooksys.butterpillar.model.ISpecies", 1,
-				this.implementations.size());
+				SpeciesTest.implementations.size());
 	}
 
 	@Test
