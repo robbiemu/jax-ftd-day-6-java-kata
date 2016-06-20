@@ -1,7 +1,5 @@
 package com.cooksys.butterpillar.model.impl;
 
-import java.util.Arrays;
-
 import com.cooksys.butterpillar.model.IButterpillar;
 import com.cooksys.butterpillar.model.ICatterfly;
 import com.cooksys.butterpillar.model.IGrowthModel;
@@ -10,7 +8,6 @@ import com.cooksys.butterpillar.model.ISpecies;
 public class Species implements ISpecies {
 	private String name;
 	private IGrowthModel gm;
-	private int indx;
 	
 	@Override
 	public String getName() {
@@ -45,20 +42,20 @@ public class Species implements ISpecies {
 	@Override
 	public ICatterfly[] convert(IButterpillar[] butterpillars) {
 		ICatterfly[] ics = new ICatterfly[butterpillars.length];
-		indx = 0;
-		Arrays.stream(butterpillars).forEach(b -> {
+		int indx = 0;
+		for(Butterpillar b: (Butterpillar[]) butterpillars){
 			ics[indx++] = gm.butterpillarToCatterfly(b);
-		});
+		}
 		return ics;
 	}
 
 	@Override
 	public IButterpillar[] convert(ICatterfly[] catterflies) {
 		IButterpillar[] ibs = new IButterpillar[catterflies.length];
-		indx = 0;
-		Arrays.stream(catterflies).forEach(c -> {
+		int indx = 0;
+		for(Catterfly c: (Catterfly[]) catterflies){
 			ibs[indx++] = gm.catterflyToButterpillar(c);
-		});
+		}
 		return ibs;
 	}
 	
